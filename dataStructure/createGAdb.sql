@@ -26,7 +26,8 @@ CREATE TABLE source (
     URL            TEXT (3, 300),
     reference      TEXT (3, 300),
     description    TEXT (3, 300),
-    comments       TEXT (0, 300)
+    comments       TEXT (0, 300),
+    otherSourceId  INTEGER      REFERENCES source (sourceId)
 );
 
 -- Not decide yet if I keep sourceId for both nucleicAcidSource
