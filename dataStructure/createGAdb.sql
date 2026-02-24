@@ -1,5 +1,3 @@
-DROP VIEW IF EXISTS ancestryCallView;
-DROP VIEW IF EXISTS popSpecificAccuracyView;
 DROP TABLE IF EXISTS admixtureProportion;
 DROP TABLE IF EXISTS ancestralAdmixtures;
 DROP TABLE IF EXISTS popSpecificAccuracy;
@@ -176,20 +174,3 @@ CREATE TABLE admixtureProportion (
 );
 
 
-CREATE VIEW ancestryCallView AS
-SELECT * FROM ancestryCall INNER JOIN
-populationDefinition ON
-ancestryCall.populationDefinitionId = populationDefinition.populationDefinitionId INNER JOIN
-molecularProfile ON
-molecularProfile.molecularProfileId = ancestryCall.molecularProfileId;
-
-
-CREATE VIEW popSpecificAccuracyView AS
-SELECT * FROM globalAncestry INNER JOIN
-popSpecificAccuracy c1 ON
-    globalAncestry.globalAncestryId = c1.globalAncestryId
-AND c1.populationDefinitionId == 1
-INNER JOIN
-popSpecificAccuracy c2 ON
-    globalAncestry.globalAncestryId = c2.globalAncestryId
-AND c2.populationDefinitionId == 2 ;
