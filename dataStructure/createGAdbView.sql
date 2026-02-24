@@ -21,7 +21,9 @@ a1.populationDefinitionId = p1.populationDefinitionId;
 
 CREATE VIEW ancestralAdmixturesView AS
 SELECT a1.*, p1.experiment AS experiment, 
-    p1.bioProject AS bioProject, p1.accession AS accession,
+    p1.bioProject AS bioProject, 
+    p1.bioSample AS bioSample, 
+    p1.accession AS accession,
     p1.name AS name, i1.name AS method, 
     i1.description AS methodDescription
 FROM ancestralAdmixtures a1
