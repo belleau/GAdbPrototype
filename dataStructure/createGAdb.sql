@@ -45,6 +45,7 @@ CREATE TABLE molecularProfile (
     bioSample            TEXT (3, 30),
     experiment           TEXT (3, 30),
     libraryStrategy      TEXT (3, 30),
+    tissueType           TEXT (3, 30),
     description          TEXT (2, 200),
     sourceId             INTEGER      REFERENCES source (sourceId),
     nucleicAcidSourceId  INTEGER      REFERENCES nucleicAcidSource (nucleicAcidSourceId)
