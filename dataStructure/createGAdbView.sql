@@ -5,7 +5,8 @@ DROP VIEW IF EXISTS admixtureProportionView;
 
 
 CREATE VIEW profileView AS
-SELECT m1.*, n1.accession AS accession, n1.name AS name FROM molecularProfile m1
+SELECT m1.*, n1.accession AS accession, n1.name AS name 
+FROM molecularProfile m1
 INNER JOIN
 nucleicAcidSource n1 ON
 m1.nucleicAcidSourceId = n1.nucleicAcidSourceId;
@@ -23,6 +24,23 @@ CREATE VIEW ancestralAdmixturesView AS
 SELECT a1.*, p1.experiment AS experiment, 
     p1.bioProject AS bioProject, 
     p1.bioSample AS bioSample, 
+    p1.libraryStrategy AS strategy,
+    p1.accession AS accession,
+    p1.name AS name, i1.name AS method, 
+    i1.description AS methodDescription
+FROM ancestralAdmixtures a1
+INNER JOIN
+profileView p1 ON
+a1.molecularProfileId = p1.molecularProfileId
+INNER JOIN
+inferenceMethodProperties i1 ON
+a1.inferenceMethodPropertiesId = i1.inferenceMethodPropertiesId;
+
+CREATE VIEW ancestralAdmixturesView AS
+SELECT a1.*, p1.experiment AS experiment, 
+    p1.bioProject AS bioProject, 
+    p1.bioSample AS bioSample, 
+    p1.libraryStrategy AS strategy,
     p1.accession AS accession,
     p1.name AS name, i1.name AS method, 
     i1.description AS methodDescription
