@@ -1,3 +1,4 @@
+DROP VIEW IF EXISTS ancestralCallView;
 DROP VIEW IF EXISTS profileAdmixturePropView;
 DROP VIEW IF EXISTS ancestralAdmixturesView;
 DROP VIEW IF EXISTS profileView;
@@ -19,30 +20,14 @@ populationDefinition p1 ON
 a1.populationDefinitionId = p1.populationDefinitionId;
 
 
-
 CREATE VIEW ancestralAdmixturesView AS
 SELECT a1.*, p1.experiment AS experiment, 
     p1.bioProject AS bioProject, 
     p1.bioSample AS bioSample, 
     p1.libraryStrategy AS strategy,
     p1.accession AS accession,
-    p1.name AS name, i1.name AS method, 
-    i1.description AS methodDescription
-FROM ancestralAdmixtures a1
-INNER JOIN
-profileView p1 ON
-a1.molecularProfileId = p1.molecularProfileId
-INNER JOIN
-inferenceMethodProperties i1 ON
-a1.inferenceMethodPropertiesId = i1.inferenceMethodPropertiesId;
-
-CREATE VIEW ancestralAdmixturesView AS
-SELECT a1.*, p1.experiment AS experiment, 
-    p1.bioProject AS bioProject, 
-    p1.bioSample AS bioSample, 
-    p1.libraryStrategy AS strategy,
-    p1.accession AS accession,
-    p1.name AS name, i1.name AS method, 
+    p1.name AS name,
+    p1.tissueType as tissueType, i1.name AS method, 
     i1.description AS methodDescription
 FROM ancestralAdmixtures a1
 INNER JOIN
@@ -90,3 +75,13 @@ INNER JOIN
 admixtureProportionView c5 ON
     (a1.ancestralAdmixturesId = c5.ancestralAdmixturesId
     AND c5.acronym == "SAS");
+
+
+CREATE VIEW ancestralCallView AS
+SELECT * FROM profileVIew p1 
+INNER JOIN 
+ancestryCall a1 ON
+a1.molecularProfileId = p1.molecularProfileId
+INNER JOIN 
+populationDefinition p2 ON
+p2.populationDefinitionId = a1.populationDefinitionId;
