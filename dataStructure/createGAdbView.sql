@@ -85,3 +85,48 @@ a1.molecularProfileId = p1.molecularProfileId
 INNER JOIN 
 populationDefinition p2 ON
 p2.populationDefinitionId = a1.populationDefinitionId;
+
+
+CREATE VIEW profileAdmixturePropCallView AS
+SELECT a1.*, 
+    ac1.acronym as SuperPop,
+    ac1.accuracy as accuracyCall,
+    c1.proportion AS pAFR,
+    c1.accuracy AS accuracyAFR, c1.CILowerBound AS CILowerBoundAFR, 
+    c1.CIUpperBound AS CIUpperBoundAFR,
+    c2.proportion AS pAMR,
+    c2.accuracy AS accuracyAMR, c2.CILowerBound AS CILowerBoundAMR, 
+    c2.CIUpperBound AS CIUpperBoundAMR,
+    c3.proportion AS pEAS,
+    c3.accuracy AS accuracyEAS, c3.CILowerBound AS CILowerBoundEAS, 
+    c3.CIUpperBound AS CIUpperBoundEAS,
+    c4.proportion AS pEUR,
+    c4.accuracy AS accuracyEUR, c4.CILowerBound AS CILowerBoundEUR, 
+    c4.CIUpperBound AS CIUpperBoundEUR,
+    c5.proportion AS pSAS,
+    c5.accuracy AS accuracySAS, c5.CILowerBound AS CILowerBoundSAS, 
+    c5.CIUpperBound AS CIUpperBoundSAS
+FROM ancestralAdmixturesView a1
+INNER JOIN
+ancestralCallView ac1 ON
+a1.molecularProfileId = ac1.molecularProfileId
+INNER JOIN
+admixtureProportionView c1 ON
+    (a1.ancestralAdmixturesId = c1.ancestralAdmixturesId
+    AND c1.acronym == "AFR")
+INNER JOIN
+admixtureProportionView c2 ON
+    (a1.ancestralAdmixturesId = c2.ancestralAdmixturesId
+    AND c2.acronym == "AMR")
+INNER JOIN
+admixtureProportionView c3 ON
+    (a1.ancestralAdmixturesId = c3.ancestralAdmixturesId
+    AND c3.acronym == "EAS")
+INNER JOIN
+admixtureProportionView c4 ON
+    (a1.ancestralAdmixturesId = c4.ancestralAdmixturesId
+    AND c4.acronym == "EUR")
+INNER JOIN
+admixtureProportionView c5 ON
+    (a1.ancestralAdmixturesId = c5.ancestralAdmixturesId
+    AND c5.acronym == "SAS");
